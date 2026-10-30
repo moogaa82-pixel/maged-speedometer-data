@@ -4,21 +4,24 @@ import time
 import requests
 from datetime import datetime
 
-# سيرفرات متبادلة لضمان عدم الفشل أثناء التحميل
+# سيرفرات موثوقة متبادلة
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
     "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
 ]
 
-# حد حدود مصر الجغرافية (South, West, North, East)
-EGYPT_BBOX = "21.8,24.5,32.0,37.0"
+# الهيدر المخصص المعتمد لدى سيرفرات Overpass لحظر الـ 429
+HEADERS = {
+    'User-Agent': 'MagedSpeedometerUpdater/1.0 (https://github.com/maged-speedometer)',
+    'Accept': 'application/json'
+}
 
 def query_overpass(ql_query):
     for endpoint in OVERPASS_ENDPOINTS:
         try:
             print(f"Querying endpoint: {endpoint}...")
-            response = requests.post(endpoint, data={'data': ql_query}, timeout=120)
+            response = requests.post(endpoint, data={'data': ql_query}, headers=HEADERS, timeout=120)
             if response.status_code == 200:
                 data = response.json()
                 if "elements" in data and len(data["elements"]) > 0:
@@ -29,7 +32,7 @@ def query_overpass(ql_query):
                 print(f"Endpoint {endpoint} failed with status code: {response.status_code}")
         except Exception as e:
             print(f"Error querying {endpoint}: {e}")
-        time.sleep(2)
+        time.sleep(3)
     return None
 
 def overpass_to_geojson(overpass_data):
@@ -79,16 +82,15 @@ def overpass_to_geojson(overpass_data):
     }
 
 def fetch_radars():
-    print("\n--- Fetching Radars ---")
-    query = f"""
+    print("\n--- Fetching Radars for Egypt ---")
+    query = """
     [out:json][timeout:180];
+    area["ISO3166-1"="EG"]->.searchArea;
     (
-      node["highway"="speed_camera"]({EGYPT_BBOX});
-      way["highway"="speed_camera"]({EGYPT_BBOX});
-      relation["highway"="speed_camera"]({EGYPT_BBOX});
-      node["enforcement"="maxspeed"]({EGYPT_BBOX});
-      way["enforcement"="maxspeed"]({EGYPT_BBOX});
-      relation["enforcement"="maxspeed"]({EGYPT_BBOX});
+      node["highway"="speed_camera"](area.searchArea);
+      node["enforcement"="maxspeed"](area.searchArea);
+      way["highway"="speed_camera"](area.searchArea);
+      relation["highway"="speed_camera"](area.searchArea);
     );
     out center;
     """
@@ -99,15 +101,16 @@ def fetch_radars():
             json.dump(geojson, f, ensure_ascii=False, indent=2)
         print(f"✅ Successfully saved radars.geojson ({len(geojson['features'])} items)")
     else:
-        print("⚠️ Warning: Radar query returned 0 items, keeping existing radars.geojson file!")
+        print("⚠️ Radar query returned 0 items, preserving existing radars.geojson file!")
 
 def fetch_speed_bumps():
-    print("\n--- Fetching Speed Bumps ---")
-    query = f"""
+    print("\n--- Fetching Speed Bumps for Egypt ---")
+    query = """
     [out:json][timeout:180];
+    area["ISO3166-1"="EG"]->.searchArea;
     (
-      node["traffic_calming"~"bump|hump|table"]({EGYPT_BBOX});
-      way["traffic_calming"~"bump|hump|table"]({EGYPT_BBOX});
+      node["traffic_calming"~"bump|hump|table"](area.searchArea);
+      way["traffic_calming"~"bump|hump|table"](area.searchArea);
     );
     out center;
     """
@@ -118,16 +121,17 @@ def fetch_speed_bumps():
             json.dump(geojson, f, ensure_ascii=False, indent=2)
         print(f"✅ Successfully saved speed_bumps.geojson ({len(geojson['features'])} items)")
     else:
-        print("⚠️ Warning: Speed bumps query returned 0 items, keeping existing speed_bumps.geojson file!")
+        print("⚠️ Speed bumps query returned 0 items, preserving existing speed_bumps.geojson file!")
 
 def fetch_fuel_stations():
-    print("\n--- Fetching Fuel Stations ---")
-    query = f"""
+    print("\n--- Fetching Fuel Stations for Egypt ---")
+    query = """
     [out:json][timeout:180];
+    area["ISO3166-1"="EG"]->.searchArea;
     (
-      node["amenity"="fuel"]({EGYPT_BBOX});
-      way["amenity"="fuel"]({EGYPT_BBOX});
-      relation["amenity"="fuel"]({EGYPT_BBOX});
+      node["amenity"="fuel"](area.searchArea);
+      way["amenity"="fuel"](area.searchArea);
+      relation["amenity"="fuel"](area.searchArea);
     );
     out center;
     """
@@ -138,18 +142,19 @@ def fetch_fuel_stations():
             json.dump(geojson, f, ensure_ascii=False, indent=2)
         print(f"✅ Successfully saved fuel.geojson ({len(geojson['features'])} items)")
     else:
-        print("⚠️ Warning: Fuel stations query returned 0 items, keeping existing fuel.geojson file!")
+        print("⚠️ Fuel stations query returned 0 items, preserving existing fuel.geojson file!")
 
 def fetch_hospitals():
-    print("\n--- Fetching Hospitals ---")
-    query = f"""
+    print("\n--- Fetching Hospitals for Egypt ---")
+    query = """
     [out:json][timeout:180];
+    area["ISO3166-1"="EG"]->.searchArea;
     (
-      node["amenity"="hospital"]({EGYPT_BBOX});
-      way["amenity"="hospital"]({EGYPT_BBOX});
-      relation["amenity"="hospital"]({EGYPT_BBOX});
-      node["healthcare"="hospital"]({EGYPT_BBOX});
-      way["healthcare"="hospital"]({EGYPT_BBOX});
+      node["amenity"="hospital"](area.searchArea);
+      way["amenity"="hospital"](area.searchArea);
+      relation["amenity"="hospital"](area.searchArea);
+      node["healthcare"="hospital"](area.searchArea);
+      way["healthcare"="hospital"](area.searchArea);
     );
     out center;
     """
@@ -160,7 +165,7 @@ def fetch_hospitals():
             json.dump(geojson, f, ensure_ascii=False, indent=2)
         print(f"✅ Successfully saved hospital.geojson ({len(geojson['features'])} items)")
     else:
-        print("⚠️ Warning: Hospitals query returned 0 items, keeping existing hospital.geojson file!")
+        print("⚠️ Hospitals query returned 0 items, preserving existing hospital.geojson file!")
 
 def update_version_manifest():
     version = 1
