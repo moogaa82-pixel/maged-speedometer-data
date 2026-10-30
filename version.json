@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "last_updated": "2026-10-30 20:10:29 UTC",
+  "datasets": {
+    "radars": "radars.geojson",
+    "speed_bumps": "speed_bumps.geojson",
+    "fuel": "fuel.geojson",
+    "hospitals": "hospital.geojson"
+  }
+}
