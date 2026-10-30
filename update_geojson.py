@@ -4,14 +4,14 @@ import time
 import requests
 from datetime import datetime
 
-# سيرفرات موثوقة متبادلة
+# سيرفرات متبادلة موثوقة لضمان التحميل حتى لو انقطع أحد السيرفرات
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
     "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
 ]
 
-# الهيدر المخصص المعتمد لدى سيرفرات Overpass لحظر الـ 429
+# الهيدر المخصص المعتمد لدى سيرفرات Overpass لمنع الحظر (429)
 HEADERS = {
     'User-Agent': 'MagedSpeedometerUpdater/1.0 (https://github.com/maged-speedometer)',
     'Accept': 'application/json'
@@ -21,7 +21,7 @@ def query_overpass(ql_query):
     for endpoint in OVERPASS_ENDPOINTS:
         try:
             print(f"Querying endpoint: {endpoint}...")
-            response = requests.post(endpoint, data={'data': ql_query}, headers=HEADERS, timeout=120)
+            response = requests.post(endpoint, data={'data': ql_query}, headers=HEADERS, timeout=180)
             if response.status_code == 200:
                 data = response.json()
                 if "elements" in data and len(data["elements"]) > 0:
@@ -109,8 +109,10 @@ def fetch_speed_bumps():
     [out:json][timeout:180];
     area["ISO3166-1"="EG"]->.searchArea;
     (
-      node["traffic_calming"~"bump|hump|table"](area.searchArea);
-      way["traffic_calming"~"bump|hump|table"](area.searchArea);
+      node["traffic_calming"](area.searchArea);
+      node["highway"="speed_bump"](area.searchArea);
+      way["traffic_calming"](area.searchArea);
+      relation["traffic_calming"](area.searchArea);
     );
     out center;
     """
