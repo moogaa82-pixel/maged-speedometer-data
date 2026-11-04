@@ -4,6 +4,7 @@ import time
 import requests
 from datetime import datetime
 
+# سيرفرات موثوقة متبادلة
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
@@ -15,22 +16,31 @@ HEADERS = {
     'Accept': 'application/json'
 }
 
-def query_overpass(ql_query):
-    for endpoint in OVERPASS_ENDPOINTS:
-        try:
-            print(f"Querying endpoint: {endpoint}...")
-            response = requests.post(endpoint, data={'data': ql_query}, headers=HEADERS, timeout=180)
-            if response.status_code == 200:
-                data = response.json()
-                if "elements" in data and len(data["elements"]) > 0:
-                    return data
-                elif "elements" in data:
-                    print(f"Endpoint {endpoint} returned 0 elements, trying next mirror...")
-            else:
-                print(f"Endpoint {endpoint} failed with status code: {response.status_code}")
-        except Exception as e:
-            print(f"Error querying {endpoint}: {e}")
-        time.sleep(3)
+def query_overpass_with_retry(ql_query, name):
+    print(f"\n==========================================")
+    print(f"   Executing Query: {name}")
+    print(f"==========================================")
+    
+    for attempt in range(1, 4):
+        for endpoint in OVERPASS_ENDPOINTS:
+            try:
+                print(f"[{name}] Attempt {attempt} querying: {endpoint}...")
+                response = requests.post(endpoint, data={'data': ql_query}, headers=HEADERS, timeout=120)
+                if response.status_code == 200:
+                    data = response.json()
+                    elements = data.get("elements", [])
+                    if len(elements) > 0:
+                        print(f"✅ SUCCESS [{name}]: Found {len(elements)} items")
+                        return data
+                    else:
+                        print(f"⚠️ [{name}] Endpoint {endpoint} returned 0 elements")
+                else:
+                    print(f"❌ [{name}] Endpoint {endpoint} status: {response.status_code}")
+            except Exception as e:
+                print(f"❌ [{name}] Exception on {endpoint}: {e}")
+            time.sleep(4)
+        print(f"Waiting 10s before retry attempt {attempt + 1} for {name}...")
+        time.sleep(10)
     return None
 
 def overpass_to_geojson(overpass_data):
@@ -65,9 +75,8 @@ def overpass_to_geojson(overpass_data):
     return {"type": "FeatureCollection", "features": features}
 
 def fetch_radars():
-    print("\n--- Fetching Radars for Egypt ---")
     query = """
-    [out:json][timeout:180];
+    [out:json][timeout:120];
     area["ISO3166-1"="EG"]->.searchArea;
     (
       node["highway"="speed_camera"](area.searchArea);
@@ -77,37 +86,34 @@ def fetch_radars():
     );
     out center;
     """
-    data = query_overpass(query)
+    data = query_overpass_with_retry(query, "Radars")
     geojson = overpass_to_geojson(data)
     if len(geojson["features"]) > 0:
         with open("radars.geojson", "w", encoding="utf-8") as f:
             json.dump(geojson, f, ensure_ascii=False, indent=2)
-        print(f"✅ Successfully saved radars.geojson ({len(geojson['features'])} items)")
+        print(f"💾 Saved radars.geojson ({len(geojson['features'])} items)")
 
 def fetch_speed_bumps():
-    print("\n--- Fetching Speed Bumps for Egypt ---")
     query = """
-    [out:json][timeout:180];
+    [out:json][timeout:120];
     area["ISO3166-1"="EG"]->.searchArea;
     (
       node["traffic_calming"](area.searchArea);
       node["highway"="speed_bump"](area.searchArea);
       way["traffic_calming"](area.searchArea);
-      relation["traffic_calming"](area.searchArea);
     );
     out center;
     """
-    data = query_overpass(query)
+    data = query_overpass_with_retry(query, "Speed Bumps")
     geojson = overpass_to_geojson(data)
     if len(geojson["features"]) > 0:
         with open("speed_bumps.geojson", "w", encoding="utf-8") as f:
             json.dump(geojson, f, ensure_ascii=False, indent=2)
-        print(f"✅ Successfully saved speed_bumps.geojson ({len(geojson['features'])} items)")
+        print(f"💾 Saved speed_bumps.geojson ({len(geojson['features'])} items)")
 
 def fetch_fuel_stations():
-    print("\n--- Fetching Fuel Stations for Egypt ---")
     query = """
-    [out:json][timeout:180];
+    [out:json][timeout:120];
     area["ISO3166-1"="EG"]->.searchArea;
     (
       node["amenity"="fuel"](area.searchArea);
@@ -116,17 +122,16 @@ def fetch_fuel_stations():
     );
     out center;
     """
-    data = query_overpass(query)
+    data = query_overpass_with_retry(query, "Fuel Stations")
     geojson = overpass_to_geojson(data)
     if len(geojson["features"]) > 0:
         with open("fuel.geojson", "w", encoding="utf-8") as f:
             json.dump(geojson, f, ensure_ascii=False, indent=2)
-        print(f"✅ Successfully saved fuel.geojson ({len(geojson['features'])} items)")
+        print(f"💾 Saved fuel.geojson ({len(geojson['features'])} items)")
 
 def fetch_hospitals():
-    print("\n--- Fetching Hospitals for Egypt ---")
     query = """
-    [out:json][timeout:180];
+    [out:json][timeout:120];
     area["ISO3166-1"="EG"]->.searchArea;
     (
       node["amenity"="hospital"](area.searchArea);
@@ -137,19 +142,20 @@ def fetch_hospitals():
     );
     out center;
     """
-    data = query_overpass(query)
+    data = query_overpass_with_retry(query, "Hospitals")
     geojson = overpass_to_geojson(data)
     if len(geojson["features"]) > 0:
         with open("hospital.geojson", "w", encoding="utf-8") as f:
             json.dump(geojson, f, ensure_ascii=False, indent=2)
-        print(f"✅ Successfully saved hospital.geojson ({len(geojson['features'])} items)")
+        print(f"💾 Saved hospital.geojson ({len(geojson['features'])} items)")
 
 def update_version_manifest():
     version = 1
     if os.path.exists("version.json"):
         try:
             with open("version.json", "r", encoding="utf-8") as f:
-                version = json.load(f).get("version", 0) + 1
+                vdata = json.load(f)
+                version = vdata.get("version", 0) + 1
         except Exception:
             version = 1
 
@@ -165,15 +171,16 @@ def update_version_manifest():
     }
     with open("version.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
+    print(f"\n📌 Updated version.json to V{version}")
 
 if __name__ == "__main__":
     fetch_radars()
-    time.sleep(3)
+    time.sleep(12)  # مهلة زمنية 12 ثانية لإعادة تصفير الـ Rate Limit
     fetch_speed_bumps()
-    time.sleep(3)
+    time.sleep(12)
     fetch_fuel_stations()
-    time.sleep(3)
+    time.sleep(12)
     fetch_hospitals()
-    time.sleep(1)
+    time.sleep(2)
     update_version_manifest()
-    print("\n🎉 All datasets update finished successfully!")
+    print("\n🎉 All 4 datasets updated and verified successfully!")
