@@ -6060,6 +6060,56 @@
     },
     {
       "type": "Feature",
+      "id": "node/14338205436",
+      "properties": {
+        "@id": "node/14338205436",
+        "name": "مستشفي الدكتور سعد العجوز",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.5301356,
+          30.5959659
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/14345648259",
+      "properties": {
+        "@id": "node/14345648259",
+        "name": "عيادة مصر",
+        "brand": "https://misrclinic.com",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.1426373,
+          29.9870551
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/14345648260",
+      "properties": {
+        "@id": "node/14345648260",
+        "name": "عيادة مصر",
+        "brand": "Misr Clinic",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.1516553,
+          29.9958666
+        ]
+      }
+    },
+    {
+      "type": "Feature",
       "id": "way/28661710",
       "properties": {
         "@id": "way/28661710",
@@ -6296,23 +6346,6 @@
         "coordinates": [
           31.2904634,
           30.0763999
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "way/29991193",
-      "properties": {
-        "@id": "way/29991193",
-        "name": "مستشفى الدمرداش",
-        "brand": "جامعة عين شمس",
-        "amenity": "hospital"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          31.2776939,
-          30.0735452
         ]
       }
     },
@@ -10346,6 +10379,23 @@
         "coordinates": [
           31.2306011,
           29.9851179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "relation/21888387",
+      "properties": {
+        "@id": "relation/21888387",
+        "name": "مستشفى الدمرداش",
+        "brand": "جامعة عين شمس",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.279406,
+          30.0744151
         ]
       }
     }

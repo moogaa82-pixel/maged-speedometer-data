@@ -498,23 +498,6 @@
     },
     {
       "type": "Feature",
-      "id": "node/6470193753",
-      "properties": {
-        "@id": "node/6470193753",
-        "name": "Ring Rd. Exit to Zahraa Misr Al Qadima",
-        "maxspeed": "90",
-        "highway": "speed_camera"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          31.234257,
-          29.9917343
-        ]
-      }
-    },
-    {
-      "type": "Feature",
       "id": "node/6473164088",
       "properties": {
         "@id": "node/6473164088",
@@ -1390,6 +1373,22 @@
         "coordinates": [
           31.2341309,
           29.9911995
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/9822206648",
+      "properties": {
+        "@id": "node/9822206648",
+        "maxspeed": "90",
+        "highway": "speed_camera"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.2281106,
+          29.9894329
         ]
       }
     },
@@ -9596,8 +9595,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31.2258143,
-          30.031331
+          31.2257848,
+          30.0313473
         ]
       }
     },
@@ -10636,6 +10635,22 @@
         "coordinates": [
           31.1970281,
           30.0372985
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/14349266728",
+      "properties": {
+        "@id": "node/14349266728",
+        "maxspeed": "90",
+        "highway": "speed_camera"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.234013,
+          29.9916712
         ]
       }
     }
