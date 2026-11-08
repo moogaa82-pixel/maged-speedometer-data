@@ -9610,6 +9610,22 @@
     },
     {
       "type": "Feature",
+      "id": "node/14356284003",
+      "properties": {
+        "@id": "node/14356284003",
+        "name": "Mobil",
+        "amenity": "fuel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.4621096,
+          29.9996144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
       "id": "way/24886959",
       "properties": {
         "@id": "way/24886959",
