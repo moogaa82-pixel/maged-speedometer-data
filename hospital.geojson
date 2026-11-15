@@ -4526,22 +4526,6 @@
     },
     {
       "type": "Feature",
-      "id": "node/12402732939",
-      "properties": {
-        "@id": "node/12402732939",
-        "name": "Project Land",
-        "amenity": "hospital"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          32.5426569,
-          30.0294752
-        ]
-      }
-    },
-    {
-      "type": "Feature",
       "id": "node/12880601276",
       "properties": {
         "@id": "node/12880601276",
@@ -10035,8 +10019,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32.5419605,
-          30.0290288
+          32.5421449,
+          30.0294169
         ]
       }
     },
