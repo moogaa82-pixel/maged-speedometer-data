@@ -6094,6 +6094,55 @@
     },
     {
       "type": "Feature",
+      "id": "node/14388458964",
+      "properties": {
+        "@id": "node/14388458964",
+        "name": "الوحدة الصحية امبركاب",
+        "brand": "الوحدة الصحية امبركاب",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.9305995,
+          24.5912515
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/14391473546",
+      "properties": {
+        "@id": "node/14391473546",
+        "name": "الوحدة الصحية - دابود",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.9489875,
+          24.575268
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/14395829229",
+      "properties": {
+        "@id": "node/14395829229",
+        "name": "مستشفى",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.5738709,
+          30.8905808
+        ]
+      }
+    },
+    {
+      "type": "Feature",
       "id": "way/28661710",
       "properties": {
         "@id": "way/28661710",
@@ -9900,7 +9949,7 @@
       "id": "way/1230107731",
       "properties": {
         "@id": "way/1230107731",
-        "name": "مستشفى القاهرة الجديدة",
+        "name": "New Cairo Hospital",
         "amenity": "hospital"
       },
       "geometry": {
@@ -10284,6 +10333,37 @@
         "coordinates": [
           31.2886045,
           30.0493456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1580683278",
+      "properties": {
+        "@id": "way/1580683278",
+        "name": "مستشفى الدكة",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.938615,
+          24.5904667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1581974967",
+      "properties": {
+        "@id": "way/1581974967",
+        "amenity": "hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.5738264,
+          30.8905375
         ]
       }
     },

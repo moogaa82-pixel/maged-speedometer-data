@@ -1,6 +1,6 @@
 {
-  "version": "v1.0.2",
-  "last_updated": "2026-11-21 23:20:03 UTC",
+  "version": "v1.0.3",
+  "last_updated": "2026-11-21 23:40:18 UTC",
   "datasets": {
     "radars": "radars.geojson",
     "speed_bumps": "speed_bumps.geojson",

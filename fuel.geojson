@@ -9626,6 +9626,38 @@
     },
     {
       "type": "Feature",
+      "id": "node/14391465537",
+      "properties": {
+        "@id": "node/14391465537",
+        "name": "محطة وقود ( بنزينة )",
+        "amenity": "fuel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.9495816,
+          24.5841944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/14391473545",
+      "properties": {
+        "@id": "node/14391473545",
+        "name": "محطة وقود ( بنزينة )",
+        "amenity": "fuel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.949574,
+          24.5812666
+        ]
+      }
+    },
+    {
+      "type": "Feature",
       "id": "way/24886959",
       "properties": {
         "@id": "way/24886959",
