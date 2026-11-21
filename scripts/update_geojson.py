@@ -2,7 +2,7 @@ import json
 import os
 import time
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 
 OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
