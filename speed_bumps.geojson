@@ -79956,6 +79956,102 @@
         ]
       },
       "id": "node/custom_bump_1794391162066"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/custom_bump_1795172798772",
+        "traffic_calming": "bump",
+        "name": "مطب مخصص مؤكد"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.94136452304073,
+          29.90696551653267
+        ]
+      },
+      "id": "node/custom_bump_1795172798772"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/custom_bump_1795172822069",
+        "traffic_calming": "bump",
+        "name": "مطب مخصص مؤكد"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.943381709977494,
+          29.90693220711479
+        ]
+      },
+      "id": "node/custom_bump_1795172822069"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/custom_bump_1795172869508",
+        "traffic_calming": "bump",
+        "name": "مطب مخصص مؤكد"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.946306814860613,
+          29.906888565839083
+        ]
+      },
+      "id": "node/custom_bump_1795172869508"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/custom_bump_1795172910702",
+        "traffic_calming": "bump",
+        "name": "مطب مخصص مؤكد"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.951687338401168,
+          29.906735294235098
+        ]
+      },
+      "id": "node/custom_bump_1795172910702"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/custom_bump_1795172953042",
+        "traffic_calming": "bump",
+        "name": "مطب مخصص مؤكد"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.957020000000004,
+          29.906604
+        ]
+      },
+      "id": "node/custom_bump_1795172953042"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/custom_bump_1795194873474",
+        "traffic_calming": "bump",
+        "name": "مطب مخصص مؤكد"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.933348618491824,
+          29.909671619406183
+        ]
+      },
+      "id": "node/custom_bump_1795194873474"
     }
   ]
 }
