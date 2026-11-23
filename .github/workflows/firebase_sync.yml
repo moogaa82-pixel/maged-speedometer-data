@@ -25,5 +25,5 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add blacklisted_nodes.json speed_bumps.geojson radars.geojson app/src/main/assets/speed_bumps.geojson app/src/main/assets/radars.geojson
+          git add blacklisted_nodes.json speed_bumps.geojson radars.geojson version.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "auto(data): sync crowdsourced bumps and radars from Firebase" && git push)
